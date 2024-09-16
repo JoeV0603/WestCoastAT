@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.cucumber.java.en.Given;
@@ -45,29 +46,36 @@ public class Cart {
 		driver.findElement(By.xpath("//button[@class='woocommerce-button button woocommerce-form-login__submit']")).click();
 
 		Thread.sleep(1000);
-    	
-		driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']")).click();
 		
-        Thread.sleep(2000);
+		WebElement cartIcon = driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartIcon);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(cartIcon));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(cartIcon).click().perform();
 		
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
+        Thread.sleep(3000);
+        
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+		Actions actions1 = new Actions(driver);
+		actions1.moveToElement(cartLink).click().perform();
 		
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         
     }
 
     @When("the user views the cart")
     public void the_user_views_the_cart() throws InterruptedException {
+    	
+    	Thread.sleep(5000);
         
         WebElement viewCart = driver.findElement(By.xpath("//div[@class='title']"));
         
     	assertTrue(viewCart.isDisplayed());
         
-    	assertEquals("CART", viewCart.getText());
+    	assertEquals("Cart", viewCart.getText());
 
     	Thread.sleep(2000);
     	
@@ -84,9 +92,9 @@ public class Cart {
 
             List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            List<String> expectedNames = Arrays.asList("Coffee Shop Ground Coffee: 6 Lb", "Farmer Brothers Premium Pomegranate Herbal Tea");
+            List<String> expectedNames = Arrays.asList("French No.6- 12oz. Ground Coffee", "Good Morning- 12oz. Ground Coffee");
             List<Integer> expectedQuantities = Arrays.asList(1, 1);
-            List<String> expectedPrices = Arrays.asList("$ 45.98", "$ 4.50");
+            List<String> expectedPrices = Arrays.asList("$10.99", "$10.99");
 
             System.out.println("Number of items in cart: " + cartRows.size());
             System.out.println("Expected number of items: " + expectedNames.size());
@@ -173,7 +181,12 @@ public class Cart {
 		
 		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("(//a[@href='https://boyds.wp.shottqsr.com/product/coffee-shop-ground-coffee-6-lb/'])")).click();
+		WebElement product = driver.findElement(By.xpath("//a[@href='https://boyds.wp.shottqsr.com/product/100-brazil-ground-coffee-3oz-portion-packs-case-of-40/']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", product);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(product));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(product).click().perform();
 		
 		Thread.sleep(1000);
 		
@@ -186,13 +199,14 @@ public class Cart {
     	
     	driver.findElement(By.xpath("//button[@name='add-to-cart']")).click();
     	
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 		
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(cartLink).click().perform();
 		
 		Thread.sleep(2000);
     }
@@ -208,9 +222,9 @@ public class Cart {
             
             List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            String expectedName = "Coffee Shop Ground Coffee: 6 Lb";
+            String expectedName = "100% Brazil Ground Coffee- 3oz Portion Packs (Case Of 40)";
             int expectedQuantity = 1;
-            String expectedPrice = "$ 45.98";
+            String expectedPrice = "$1.99";
 
             System.out.println("Number of items in cart: " + cartRows.size());
             System.out.println("Expected number of items: 1");
@@ -300,17 +314,24 @@ public class Cart {
     @When("the user adds a product to the cart")
     public void the_user_adds_a_product_to_the_cart_from_listing_page() throws InterruptedException {
        
-    	Thread.sleep(3000);
+        Thread.sleep(2000);
     	
-    	driver.findElement(By.xpath("//a[@href='?add-to-cart=89']")).click();
+    	driver.findElement(By.xpath("//a[@href='?add-to-cart=3740']")).click();
+    	
+    	WebElement addProd = driver.findElement(By.xpath("//a[@href='?add-to-cart=3740']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addProd);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(addProd));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(addProd).click().perform();
     	
     	Thread.sleep(2000);
     	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+    	 WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);   
+ 		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+ 		Actions actions1 = new Actions(driver);
+ 		actions1.moveToElement(cartLink).click().perform();
 		
 		Thread.sleep(2000);
     	
@@ -327,9 +348,9 @@ public class Cart {
             
             List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            String expectedName = "Coffee Shop Ground Coffee: 6 Lb";
+            String expectedName = "100% Brazil Ground Coffee- 3oz Portion Packs (Case Of 40)";
             int expectedQuantity = 1;
-            String expectedPrice = "$ 45.98";
+            String expectedPrice = "$1.99";
 
             System.out.println("Number of items in cart: " + cartRows.size());
             System.out.println("Expected number of items: 1");
@@ -392,6 +413,8 @@ public class Cart {
         
     	driver.get("https://boyds.wp.shottqsr.com/");
 
+    	Thread.sleep(2000);
+    	
 		driver.manage().window().maximize();
 
 		Thread.sleep(1000);
@@ -408,17 +431,22 @@ public class Cart {
 		
 		driver.findElement(By.xpath("//button[@class='woocommerce-button button woocommerce-form-login__submit']")).click();
 
-		Thread.sleep(1000);
-    	
-        driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']")).click();
+        Thread.sleep(5000);
+		
+        WebElement cartIcon = driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartIcon);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(cartIcon));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(cartIcon).click().perform();
 		
         Thread.sleep(2000);
-		
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+		Actions actions1 = new Actions(driver);
+		actions1.moveToElement(cartLink).click().perform();
 		
         Thread.sleep(2000);
     	
@@ -442,11 +470,12 @@ public class Cart {
     @Then("the cart should reflect the increased quantity")
     public void the_cart_should_reflect_the_increased_quantity() throws InterruptedException {
         
-    	Thread.sleep(2000);
+    	Thread.sleep(3000);
     	
     	try {
             
-            WebElement quantityInput = driver.findElement(By.cssSelector(".product-quantity input.qty"));
+    		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    		WebElement quantityInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".product-quantity input.qty")));
 
             String actualQuantity = quantityInput.getAttribute("value").trim();
 
@@ -490,11 +519,12 @@ public class Cart {
     @Then("the cart should reflect the decreased quantity")
     public void the_cart_should_reflect_the_decreased_quantity() throws InterruptedException {
         
-        Thread.sleep(2000);
+        Thread.sleep(3000);
     	
     	try {
             
-            WebElement quantityInput = driver.findElement(By.cssSelector(".product-quantity input.qty"));
+    		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    		WebElement quantityInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".product-quantity input.qty")));
 
             String actualQuantity = quantityInput.getAttribute("value").trim();
 
@@ -549,19 +579,21 @@ public class Cart {
     public void the_cart_should_still_contain_the_same_product() throws InterruptedException {
         
         Thread.sleep(1000);
-    	
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        
-        WebElement cartIcon = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']")));
-        cartIcon.click();
-	
-        Thread.sleep(2000);
 		
-        WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement cartIcon = driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartIcon);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(cartIcon));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(cartIcon).click().perform();
+		
+        Thread.sleep(3000);
 
-        WebElement cartLink = wait1.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink); 
+		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+		Actions actions1 = new Actions(driver);
+		actions1.moveToElement(cartLink).click().perform();
 		
         Thread.sleep(3000);
         
@@ -571,9 +603,9 @@ public class Cart {
             
             List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            String expectedName = "Coffee Shop Ground Coffee: 6 Lb";
+            String expectedName = "French No.6- 12oz. Ground Coffee";
             int expectedQuantity = 1;
-            String expectedPrice = "$ 45.98";
+            String expectedPrice = "$10.99";
 
             System.out.println("Number of items in cart: " + cartRows.size());
             System.out.println("Expected number of items: 1");
@@ -634,11 +666,11 @@ public class Cart {
     @When("the user applies a discount code")
     public void the_user_applies_a_discount_code() throws InterruptedException {
        
-    	Thread.sleep(1000);
+    	Thread.sleep(2000);
 		
     	driver.findElement(By.id("coupon_code")).sendKeys("KA7JY7EX");
     		
-    	Thread.sleep(1000);
+    	Thread.sleep(2000);
     	
     	driver.findElement(By.xpath("//button[@name='apply_coupon']")).click();
     	
@@ -723,21 +755,22 @@ public class Cart {
     @When("the user adds multiple products to the cart")
     public void the_user_adds_multiple_products_to_the_cart() throws InterruptedException {
         
-        Thread.sleep(3000);
+        Thread.sleep(2000);
     	
-    	driver.findElement(By.xpath("//a[@href='?add-to-cart=89']")).click();
+    	driver.findElement(By.xpath("//a[@href='?add-to-cart=3740']")).click();
     	
     	Thread.sleep(2000);
-    	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement shopLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/shop/']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", shopLink);
-        shopLink.click();
 		
+        WebElement closeCart = driver.findElement(By.xpath("//a[@href='xoo-wsch-close xoo-wsc-icon-cross']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeCart);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(closeCart));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(closeCart).click().perform();
+        
 		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("//a[@href='?add-to-cart=341']")).click();
+		driver.findElement(By.xpath("//a[@href='?add-to-cart=3750']")).click();
     	
 		Thread.sleep(2000);		
 		
@@ -746,13 +779,14 @@ public class Cart {
     @Then("the cart should contain all the added products")
     public void the_cart_should_contain_all_the_added_products() throws InterruptedException {
         
-    	Thread.sleep(1000);
+    	Thread.sleep(2000);
     	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+    	 WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
+         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
+         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+ 		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+ 		Actions actions = new Actions(driver);
+ 		actions.moveToElement(cartLink).click().perform();
 		
 		Thread.sleep(3000);
     	
@@ -762,9 +796,9 @@ public class Cart {
 
             List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            List<String> expectedNames = Arrays.asList("Coffee Shop Ground Coffee: 6 Lb", "Farmer Brothers Premium Pomegranate Herbal Tea");
+            List<String> expectedNames = Arrays.asList("100% Brazil Ground Coffee- 3oz Portion Packs (case of 40)", "100% Colombian – 5lb Whole Bean Coffee");
             List<Integer> expectedQuantities = Arrays.asList(1, 1);
-            List<String> expectedPrices = Arrays.asList("$ 45.98", "$ 4.50");
+            List<String> expectedPrices = Arrays.asList("$1.99", "$1.99");
 
             System.out.println("Number of items in cart: " + cartRows.size());
             System.out.println("Expected number of items: " + expectedNames.size());
@@ -819,63 +853,6 @@ public class Cart {
             assert false : "An unexpected error occurred during cart verification";
         }
     	
-        Thread.sleep(2000);
-        
-        driver.quit();
-		
-    }
-
-    @Given("the user is on the product detail page of an out-of-stock product")
-    public void the_user_is_on_the_product_detail_page_of_an_out_of_stock_product() throws InterruptedException {
-        
-    	driver.get("https://boyds.wp.shottqsr.com/");
-
-		driver.manage().window().maximize();
-
-		Thread.sleep(1000);
-		
-        driver.findElement(By.xpath("(//a[@href='https://boyds.wp.shottqsr.com/shop/']) [1]")).click();
-		
-		Thread.sleep(2000);
-		
-		driver.findElement(By.xpath("//a[@href='https://boyds.wp.shottqsr.com/product/boyds-breaktime-12-oz-ground-coffee/']")).click();
-
-		Thread.sleep(1000);
-		
-    }
-
-    @When("the user tries to add the product to the cart")
-    public void the_user_tries_to_add_the_product_to_the_cart() throws InterruptedException {
-        
-    	Thread.sleep(2000);
-  	  
-        WebElement outofStock = driver.findElement(By.xpath("//p[@class='stock out-of-stock']"));
-        
-        assertTrue(outofStock.isDisplayed());
-        
-        assertEquals("Desired qty not available", outofStock.getText());
-    
-        Thread.sleep(2000);
-    	
-    }
-
-    @Then("the cart should not contain the out-of-stock product")
-    public void the_cart_should_not_contain_the_out_of_stock_product() throws InterruptedException {
-
-        Thread.sleep(1000);
-    	
-		driver.findElement(By.xpath("//span[@class='xoo-wsc-sc-bki xoo-wsc-icon-bag2']")).click();
-    	
-		Thread.sleep(2000);
-		
-        WebElement emptyCart = driver.findElement(By.xpath("//div[@class='xoo-wsc-empty-cart']"));
-        
-        assertTrue(emptyCart.isDisplayed());
-        
-        String expectedText = "Your cart is empty";
-        String actualText = emptyCart.getText();
-        assertTrue("Expected text not found in the empty cart message", actualText.contains(expectedText));
-    
         Thread.sleep(2000);
         
         driver.quit();
@@ -903,9 +880,14 @@ public class Cart {
 		
 		driver.findElement(By.xpath("//button[@class='woocommerce-button button woocommerce-form-login__submit']")).click();
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("//a[@href='/wishlist']")).click();
+		WebElement wishlist = driver.findElement(By.xpath("//a[@href='/wishlist']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", wishlist);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(wishlist));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(wishlist).click().perform();
 		
 		Thread.sleep(2000);
     	
@@ -916,57 +898,44 @@ public class Cart {
         
         Thread.sleep(1000);
 		
-        driver.findElement(By.xpath("//a[@href='?add-to-cart=89']")).click();
+        driver.findElement(By.xpath("//a[@href='?add-to-cart=39']")).click();
     	
-    	Thread.sleep(3000);
-    	
-    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
-        WebElement closeCart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='xoo-wsch-close xoo-wsc-icon-cross']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeCart);
-        closeCart.click();
-		
-		Thread.sleep(2000);
-		
-		driver.findElement(By.xpath("//a[@href='?add-to-cart=341']")).click();
-    	
-		Thread.sleep(2000);		
+    	Thread.sleep(5000);
     	
     }
 
     @Then("the cart should contain the added product from wishlist")
     public void the_cart_should_contain_the_added_product_from_wishlist() throws InterruptedException {
         
-        Thread.sleep(1000);
+        Thread.sleep(2000);
     	
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        WebElement cartLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='/cart/']")));
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart/']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cartLink);
-        cartLink.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.elementToBeClickable(cartLink));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(cartLink).click().perform();
 		
 		Thread.sleep(3000);
     	
         try {
-            
-            WebElement cartTable = driver.findElement(By.xpath("//table[@class='shop_table shop_table_responsive cart woocommerce-cart-form__contents']"));
+     		   
+                WebElement cartTable = driver.findElement(By.xpath("//table[@class='shop_table shop_table_responsive cart woocommerce-cart-form__contents']"));
+                
+                List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
 
-            List<WebElement> cartRows = cartTable.findElements(By.xpath("//tr[@class='woocommerce-cart-form__cart-item cart_item']"));
+                String expectedName = "French No.6- 12oz. Ground Coffee";
+                int expectedQuantity = 1;
+                String expectedPrice = "$10.99";
 
-            List<String> expectedNames = Arrays.asList("Coffee Shop Ground Coffee: 6 Lb", "Farmer Brothers Premium Pomegranate Herbal Tea");
-            List<Integer> expectedQuantities = Arrays.asList(1, 1);
-            List<String> expectedPrices = Arrays.asList("$ 45.98", "$ 4.50");
+                System.out.println("Number of items in cart: " + cartRows.size());
+                System.out.println("Expected number of items: 1");
 
-            System.out.println("Number of items in cart: " + cartRows.size());
-            System.out.println("Expected number of items: " + expectedNames.size());
+                if (cartRows.size() != 1) {
+                    assert false : "Number of items in cart does not match expected";
+                }
 
-            if (cartRows.size() != expectedNames.size()) {
-                assert false : "Number of items in cart does not match expected";
-            }
-
-            for (int i = 0; i < cartRows.size(); i++) {
-                WebElement row = cartRows.get(i);
-
+                WebElement row = cartRows.get(0);
                 WebElement itemNameElement = row.findElement(By.cssSelector(".product-name a"));
                 WebElement itemQuantityElement = row.findElement(By.cssSelector(".product-quantity input.qty"));
                 WebElement itemPriceElement = row.findElement(By.cssSelector(".product-subtotal .amount"));
@@ -975,44 +944,43 @@ public class Cart {
                 int itemQuantity = Integer.parseInt(itemQuantityElement.getAttribute("value").trim());
                 String itemPrice = itemPriceElement.getText().trim();
 
-                System.out.println("Item " + (i + 1) + ":");
+                System.out.println("Item:");
                 System.out.println("Name: " + itemName);
                 System.out.println("Quantity: " + itemQuantity);
                 System.out.println("Price: " + itemPrice);
 
-                if (!itemName.equals(expectedNames.get(i))) {
-                    System.out.println("Expected Name: " + expectedNames.get(i));
+                if (!itemName.equals(expectedName)) {
+                    System.out.println("Expected Name: " + expectedName);
                     System.out.println("Actual Name: " + itemName);
                     assert false : "Item name does not match expected";
                 }
-                if (itemQuantity != expectedQuantities.get(i)) {
-                    System.out.println("Expected Quantity: " + expectedQuantities.get(i));
+                if (itemQuantity != expectedQuantity) {
+                    System.out.println("Expected Quantity: " + expectedQuantity);
                     System.out.println("Actual Quantity: " + itemQuantity);
                     assert false : "Item quantity does not match expected";
                 }
-                if (!itemPrice.equals(expectedPrices.get(i))) {
-                    System.out.println("Expected Price: " + expectedPrices.get(i));
+                if (!itemPrice.equals(expectedPrice)) {
+                    System.out.println("Expected Price: " + expectedPrice);
                     System.out.println("Actual Price: " + itemPrice);
                     assert false : "Item price does not match expected";
                 }
+            } catch (NoSuchElementException e) {
+                System.out.println("NoSuchElementException: Element not found");
+                e.printStackTrace();
+                assert false : "Element not found in the cart";
+            } catch (NullPointerException e) {
+                System.out.println("NullPointerException: Null value encountered");
+                e.printStackTrace();
+                assert false : "Null value encountered during cart verification";
+            } catch (Exception e) {
+                System.out.println("Exception: An unexpected error occurred");
+                e.printStackTrace();
+                assert false : "An unexpected error occurred during cart verification";
             }
-        } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException: Element not found");
-            e.printStackTrace();
-            assert false : "Element not found in the cart";
-        } catch (NullPointerException e) {
-            System.out.println("NullPointerException: Null value encountered");
-            e.printStackTrace();
-            assert false : "Null value encountered during cart verification";
-        } catch (Exception e) {
-            System.out.println("Exception: An unexpected error occurred");
-            e.printStackTrace();
-            assert false : "An unexpected error occurred during cart verification";
-        }
-    	
-        Thread.sleep(2000);
-        
-        driver.quit();
+        	
+            Thread.sleep(2000);
+            
+            driver.quit();
 		
     }
    

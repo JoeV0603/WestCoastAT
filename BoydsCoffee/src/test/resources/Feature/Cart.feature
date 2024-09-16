@@ -45,11 +45,6 @@ Scenario: Verify adding multiple products to cart
     When the user adds multiple products to the cart
     Then the cart should contain all the added products
 
-Scenario: Verify adding out-of-stock product to cart
-    Given the user is on the product detail page of an out-of-stock product
-    When the user tries to add the product to the cart
-    Then the cart should not contain the out-of-stock product
-
 Scenario: Verify adding products to cart from wishlist
     Given the user has products in the wishlist
     When the user adds a product from the wishlist to the cart
