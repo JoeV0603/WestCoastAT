@@ -38,7 +38,7 @@ public class AcctMgmnt {
 		
 		driver.findElement(By.name("password")).sendKeys("Joevishal@0603");
 		
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//button[@class='woocommerce-button button woocommerce-form-login__submit']")).click();
 		
