@@ -146,7 +146,7 @@ public class Secure_Comply {
     @Given("I am on the payment page")
     public void i_am_on_the_payment_page() throws InterruptedException {
         
-    	driver.get("https://boyds.wp.shottqsr.com/");
+    	driver.get("https://westcoast.wp.shottqsr.com/");
 
 		driver.manage().window().maximize();
 
@@ -171,7 +171,7 @@ public class Secure_Comply {
     @Given("I access sensitive data")
     public void i_access_sensitive_data() throws InterruptedException {
         
-    	driver.get("https://boyds.wp.shottqsr.com/");
+    	driver.get("https://westcoast.wp.shottqsr.com/");
 
 		driver.manage().window().maximize();
 
@@ -191,7 +191,7 @@ public class Secure_Comply {
     @Given("a security event occurs")
     public void a_security_event_occurs() throws InterruptedException {
         
-    	driver.get("https://boyds.wp.shottqsr.com/");
+    	driver.get("https://westcoast.wp.shottqsr.com/");
 
 		driver.manage().window().maximize();
 
@@ -216,7 +216,7 @@ public class Secure_Comply {
     @Given("I request my data for GDPR compliance")
     public void i_request_my_data_for_GDPR_compliance() throws InterruptedException {
         
-    	driver.get("https://boyds.wp.shottqsr.com/");
+    	driver.get("https://westcoast.wp.shottqsr.com/");
 
 		driver.manage().window().maximize();
 
